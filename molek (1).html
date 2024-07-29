@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kártevőirtás</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Alap stílusok */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Navigáció */
+        header {
+            background: #2c3e50;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo a {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: #fff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #1abc9c;
+        }
+
+        /* Dropdown Menü */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #2c3e50;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #1abc9c;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px;
+            transition: 0.3s;
+        }
+
+        /* Hero Szekció */
+        .hero-section {
+            background-image: url('https://bogarmernokseg.hu/uploads/images/rovar-irtas.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            background-color: #1abc9c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #16a085;
+        }
+
+        /* Szolgáltatások Szekció */
+        .services-section {
+            background-color: #f4f4f4;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .services-section h2 {
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .service {
+            background-color: #fff;
+            margin: 20px;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex: 1 1 30%;
+            max-width: 300px;
+            text-align: left;
+        }
+
+        .service h3 {
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .service p {
+            font-size: 16px;
+        }
+
+        .service img {
+            width: 100%;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        /* Rólunk Szekció */
+        .about-section {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: #2c3e50;
+            color: #fff;
+        }
+
+        .about-section h2 {
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+        .about-section p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Kapcsolat Szekció */
+        .contact-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            margin-bottom: 40px;
+            font-size: 36px;
+        }
+
+        .contact-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-info {
+            flex: 1 1 40%;
+            max-width: 400px;
+            margin: 20px;
+            text-align: left;
+        }
+
+        .contact-info p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .contact-form {
+            flex: 1 1 40%;
+            max-width: 400px;
+            margin: 20px;
+        }
+
+        .contact-form select,
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #1abc9c;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #16a085;
+        }
+
+        /* Lábléc */
+        footer {
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 30px;
+        }
+
+        /* Reszponzív Stílusok */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: #2c3e50;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                padding: 10px 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .menu-toggle.open .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.open .bar:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 6px);
+            }
+
+            .menu-toggle.open .bar:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
+            }
+
+            .services-container,
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigáció -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="#" title="Főoldal">Molek Dávid szakember</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" title="Főoldal">Főoldal</a></li>
+                <li class="dropdown">
+                    <a href="#" title="Szolgáltatások">Szolgáltatások</a>
+                    <div class="dropdown-content">
+                        <a href="#service1" title="Rágcsálóírtás">Rágcsálóírtás</a>
+                        <a href="#service2" title="Rovarirtás">Rovarirtás</a>
+                        <a href="#service3" title="Csótányirtás">Csótányirtás</a>
+                        <a href="#service4" title="Darázsirtás">Darázsirtás</a>
+                        <a href="#service5" title="Fertőtlenítés">Fertőtlenítés</a>
+                    </div>
+                </li>
+                <li><a href="#about" title="Rólunk">Rólunk</a></li>
+                <li><a href="#contact" title="Kapcsolat">Kapcsolat</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Szekció -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Üdvözöljük a Kártevőirtás Oldalán!</h1>
+            <p>Hatékony és megbízható kártevőirtás az Ön otthonában vagy vállalkozásában.</p>
+            <a href="#services" class="btn">Tudjon meg többet</a>
+        </div>
+    </section>
+
+    <!-- Szolgáltatások Szekció -->
+    <section class="services-section" id="services">
+        <h2>Szolgáltatásaink</h2>
+        <div class="services-container">
+            <div class="service" id="service1">
+                <h3>Rágcsálóírtás</h3>
+                <p>A Lorem Ipsum egy egyszerû szövegrészlete, szövegutánzata a betûszedõ és nyomdaiparnak. A Lorem Ipsum az 1500-as évek óta standard szövegrészletként szolgált az iparban; mikor egy ismeretlen nyomdász összeállította a betûkészletét és egy példa-könyvet vagy szöveget nyomott papírra, ezt használta. Nem csak 5 évszázadot élt túl, de az elektronikus betûkészleteknél is változatlanul megmaradt. Az 1960-as években népszerûsítették a Lorem Ipsum részleteket magukbafoglaló Letraset lapokkal, és legutóbb softwarekkel mint például az Aldus Pagemaker.</p>
+                <img src="https://agrio.hu/wp-content/uploads/2021/05/ragcsalo-falban01.jpg" alt="Rágcsáló">
+            </div>
+            <div class="service" id="service2">
+                <h3>Rovarirtás</h3>
+                <p>A Lorem Ipsum egy egyszerû szövegrészlete, szövegutánzata a betûszedõ és nyomdaiparnak. A Lorem Ipsum az 1500-as évek óta standard szövegrészletként szolgált az iparban; mikor egy ismeretlen nyomdász összeállította a betûkészletét és egy példa-könyvet vagy szöveget nyomott papírra, ezt használta. Nem csak 5 évszázadot élt túl, de az elektronikus betûkészleteknél is változatlanul megmaradt. Az 1960-as években népszerûsítették a Lorem Ipsum részleteket magukbafoglaló Letraset lapokkal, és legutóbb softwarekkel mint például az Aldus Pagemaker.</p>
+                <img src="https://cdn.create.vista.com/api/media/small/385233024/stock-photo-dead-brown-cockroach-aplication-insect" alt="Rovar">
+            </div>
+            <div class="service" id="service3">
+                <h3>Csótányirtás</h3>
+                <p>A Lorem Ipsum egy egyszerû szövegrészlete, szövegutánzata a betûszedõ és nyomdaiparnak. A Lorem Ipsum az 1500-as évek óta standard szövegrészletként szolgált az iparban; mikor egy ismeretlen nyomdász összeállította a betûkészletét és egy példa-könyvet vagy szöveget nyomott papírra, ezt használta. Nem csak 5 évszázadot élt túl, de az elektronikus betûkészleteknél is változatlanul megmaradt. Az 1960-as években népszerûsítették a Lorem Ipsum részleteket magukbafoglaló Letraset lapokkal, és legutóbb softwarekkel mint például az Aldus Pagemaker.</p>
+                <img src="https://kartevoirtasbudapest.hu/wp-content/uploads/2016/06/kartevoirtasbudapest.hu_.17szept.jpg" alt="Csótány">
+            </div>
+            <div class="service" id="service4">
+                <h3>Darázsirtás</h3>
+                <p>A Lorem Ipsum egy egyszerû szövegrészlete, szövegutánzata a betûszedõ és nyomdaiparnak. A Lorem Ipsum az 1500-as évek óta standard szövegrészletként szolgált az iparban; mikor egy ismeretlen nyomdász összeállította a betûkészletét és egy példa-könyvet vagy szöveget nyomott papírra, ezt használta. Nem csak 5 évszázadot élt túl, de az elektronikus betûkészleteknél is változatlanul megmaradt. Az 1960-as években népszerûsítették a Lorem Ipsum részleteket magukbafoglaló Letraset lapokkal, és legutóbb softwarekkel mint például az Aldus Pagemaker.</p>
+                <img src="https://triovar.hu/wp-content/uploads/2022/06/darazsak-a-feszken.jpg" alt="Darázs">
+            </div>
+            <div class="service" id="service5">
+                <h3>Fertőtlenítés</h3>
+                <p>A Lorem Ipsum egy egyszerû szövegrészlete, szövegutánzata a betûszedõ és nyomdaiparnak. A Lorem Ipsum az 1500-as évek óta standard szövegrészletként szolgált az iparban; mikor egy ismeretlen nyomdász összeállította a betûkészletét és egy példa-könyvet vagy szöveget nyomott papírra, ezt használta. Nem csak 5 évszázadot élt túl, de az elektronikus betûkészleteknél is változatlanul megmaradt. Az 1960-as években népszerûsítették a Lorem Ipsum részleteket magukbafoglaló Letraset lapokkal, és legutóbb softwarekkel mint például az Aldus Pagemaker.</p>
+                <img src="https://bogarmernokseg.hu/uploads/images/rovar-irtas.jpg" alt="Fertőtlenítés">
+            </div>
+        </div>
+    </section>
+
+    <!-- Rólunk Szekció -->
+    <section class="about-section" id="about">
+        <h2>Rólunk</h2>
+        <p>Cégünk több mint 20 éve foglalkozik kártevőirtással, megbízható és hatékony megoldásokat kínálva ügyfeleink
+            számára. Célunk, hogy otthonát és munkahelyét mentesítsük mindenféle kártevőtől, professzionális
+            megközelítéssel és modern technológiákkal. Szolgáltatásaink közé tartozik a rágcsálóirtás, rovarirtás,
+            csótányirtás, darázsirtás és fertőtlenítés.</p>
+    </section>
+
+    <!-- Kapcsolat Szekció -->
+    <section class="contact-section" id="contact">
+        <h2>Kapcsolat</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p>Keressen bizalommal!</p>
+                <p>Email: <a href="mailto:molek20807@gmail.com">molek20807@gmail.com</a></p>
+                <p>Telefon: <a href="tel:+36306085316">06 30 608 5316</a></p>
+                <p>Cím: 1234 Budapest, Példa utca 1.</p>
+            </div>
+            <div class="contact-form">
+                 <form class="contact-form" action="mailto:molek20807@gmail.com" method="post" enctype="text/plain">
+                    <label for="serviceSelect">Szolgáltatás típusa:</label>
+                    <select id="serviceSelect" name="service" required>
+                        <option value="">Válasszon egy szolgáltatást</option>
+                        <option value="Rágcsálóirtás">Rágcsálóirtás</option>
+                        <option value="Rovarirtás">Rovarirtás</option>
+                        <option value="Darazsak irtása">Csótányirtás</option>
+						<option value="Darazsak irtása">Darázsirtás</option>
+						<option value="Darazsak irtása">Fertőtlenítés</option>
+                    </select>
+
+                    <label for="name">Név:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Üzenet:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+
+                    <button type="submit" class="btn">Üzenet küldése</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lábléc -->
+    <footer>
+        <p>&copy; 2024 Molek Dávid. Minden jog fenntartva.</p>
+    </footer>
+
+    <!-- JavaScript a navigációhoz -->
+    <script>
+        // Mobil Menü Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function () {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Kapcsolat űrlap elküldése
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Megakadályozza az alapértelmezett űrlap elküldést
+
+            const serviceSelect = document.getElementById('serviceSelect');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+
+            // Ellenőrizze, hogy minden mező ki van-e töltve
+            if (serviceSelect.value && nameInput.value && emailInput.value && messageInput.value) {
+                alert('Köszönjük üzenetét! Hamarosan kapcsolatba lépünk Önnel.');
+                serviceSelect.value = ''; // Reset serviceSelect
+                nameInput.value = ''; // Reset name input
+                emailInput.value = ''; // Reset email input
+                messageInput.value = ''; // Reset message input
+            } else {
+                alert('Kérjük, töltse ki az összes mezőt!');
+            }
+        });
+    </script>
+</body>
+</html>
